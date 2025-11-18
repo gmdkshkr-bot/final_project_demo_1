@@ -140,4 +140,47 @@ if api_key and "selected_game_id" in st.session_state:
         st.write("**플랫폼:**", ", ".join([p["platform"]["name"] for p in details["platforms"]]))
         st.write("**장르:**", ", ".join([g["name"] for g in details["genres"]]))
 
-    st.markdown("### 📘
+    st.markdown("### 📘 게임 설명")
+    st.write(details.get("description_raw", "설명 없음"))
+
+    # ------------------------------
+    # Screenshots
+    # ------------------------------
+    st.markdown("### 🖼️ 스크린샷")
+
+    screenshots = get_screenshots(api_key, game_id)
+    if "results" in screenshots:
+        img_cols = st.columns(3)
+        for i, ss in enumerate(screenshots["results"][:3]):
+            img_cols[i].image(ss["image"])
+    else:
+        st.write("스크린샷 없음")
+
+    # ------------------------------
+    # Trailer
+    # ------------------------------
+    st.markdown("### 🎬 트레일러")
+    trailers = get_trailers(api_key, game_id)
+
+    if "results" in trailers and len(trailers["results"]) > 0:
+        trailer = trailers["results"][0]["data"]["480"]
+        st.video(trailer)
+    else:
+        st.write("트레일러 없음")
+
+    # ------------------------------
+    # Recommended games
+    # ------------------------------
+
+    st.markdown("### 🎮 비슷한 게임 추천")
+    rec = get_recommended(api_key, game_slug)
+
+    if "results" in rec:
+        rec_cols = st.columns(3)
+        for i, r in enumerate(rec["results"][:3]):
+            with rec_cols[i]:
+                st.image(r.get("background_image"), width=200)
+                st.write(r["name"])
+    else:
+        st.write("추천 게임 없음")
+
