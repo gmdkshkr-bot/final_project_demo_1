@@ -11,7 +11,7 @@ from urllib.parse import quote_plus
 # Page config
 # ---------------------------
 st.set_page_config(page_title="Game Explorer Pro", page_icon="🎮", layout="wide")
-st.title("🎮 Video Game Liabrary")
+st.title("🎮 Video Game Library")
 st.markdown("게임 검색 · 상세정보 · 평가 분석 · 추천 · 즐겨찾기(Import/Export) — RAWG API 기반")
 
 # ---------------------------
